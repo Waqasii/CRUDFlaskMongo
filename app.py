@@ -9,40 +9,35 @@ mongo.init_app(app)
 
 '''
     DB Name: mydb
-    collection1 name: Eng
-    collection2 name: IT
+        collection For English: Eng
+        collection For Italian: IT
+        collection For User Login: User
+    
 '''
 
 
-'''
-class Eng(db.Model):
-    _id=db.Column(db.Integer,primary_key=True)
-    name=db.Column(db.String(200),nullable=False)
-    surname=db.Column(db.String(200),nullable=False)
-    cars=db.Column(db.String(500),nullable=False)
-    city=db.Column(db.String(20),nullable=False)
-    country=db.Column(db.String(20),nullable=False)
-    
-    def __repr__(self) -> str:
-        return f"{self._id}  - {self.name}"
-    
-    
-class IT(db.Model):
-    _id=db.Column(db.Integer,primary_key=True)
-    nome=db.Column(db.String(200),nullable=False)
-    cognome=db.Column(db.String(200),nullable=False)
-    strada=db.Column(db.String(500),nullable=False)
-    citta=db.Column(db.String(20),nullable=False)
-    pease=db.Column(db.String(20),nullable=False)
-    
-    def __repr__(self) -> str:
-        return f"{self._id}  - {self.nomes}"
-    
-''' 
 
-@app.route("/",methods=['GET','POST'])
+@app.route("/")
 def index():
     return render_template('login.html')
+
+
+@app.route("/login",methods=['GET','POST'])
+def Login():
+    # get all collection from User Table
+    user_collection=mongo.db.User
+    if(request.method=='POST'):
+        # get the username and password from user
+        username=request.form['username']
+        password=request.form['password']
+        
+        # if user already exist then proceed with it to next page else save it to the database so he can login
+        # in 2nd attempt (it's just ideal case of login but not secure lol)
+        if(user_collection.find_one({'username':username,'password':password})):
+            return render_template('layout.html')
+        else:
+            user_collection.insert_one({'username':username,'password':password})
+            return redirect('/')
 
 
 

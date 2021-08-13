@@ -1,0 +1,12 @@
+==============  Virtual Enviroment =========================
+
+
+- Create Virtual Enviroment     >python -m venv env
+- activate it 			> env\Scripts\activate
+- Deactivate 			>deactivate
+
+
+=====================  MongoDB =============================
+- >pipenv install flask flask-pymongo python-dotenv
+- Add MONGO_URI from cluster application connection
+- >pipenv install dnspython
