@@ -36,3 +36,30 @@ function hide_show_table(col_name)
 }
 
 // function to handle view button
+function EngmodalShow(obj){
+
+    
+    // replacing single quote to double so we can convert string to json object
+    json_string=obj.replaceAll(`'`, `"`)
+    // parse string to convert into JSON object
+    json_obj = JSON.parse(json_string);
+    // now we can access all key value of object
+    document.getElementById("exampleModalLabel").innerHTML = "<strong>"+json_obj.name+" "+json_obj.surname+"</strong>";
+    document.getElementById("city").innerHTML = "<p><strong>City:</strong>  "+json_obj.city+"</p>";
+    document.getElementById("country").innerHTML = "<p><strong>Country:</strong>  "+json_obj.country+"</p>";
+    
+    // create a tale row and then append it into table 
+    // clear table row first
+    document.getElementById('modal-table').getElementsByTagName('tbody')[0].innerHTML=""
+    var myHtmlContent = "";
+    json_obj.cars.forEach((item) => {
+        myHtmlContent+="<tr><td>"+item.id+"</td>"+"<td>"+item.brand+"</td>"+"<td>"+item.model+"</td></tr>"
+        var tableRef = document.getElementById('modal-table').getElementsByTagName('tbody')[0];
+        var newRow = tableRef.insertRow(tableRef.rows.length);
+        newRow.innerHTML = myHtmlContent;
+        myHtmlContent = "";
+        // document.getElementById("mbody").innerHTML=myHtmlContent
+      });
+
+    
+}

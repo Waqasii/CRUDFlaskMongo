@@ -1,5 +1,8 @@
 from flask import Flask, render_template,request,redirect
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
+from bson.json_util import dumps
+from bson.json_util import loads
 
 # Creating app and configuration with MongoDB
 app = Flask(__name__)
@@ -44,7 +47,7 @@ def Login():
 def English():
     # get the data from Eng table
     eng_collection=mongo.db.Eng
-    totalEng=eng_collection.find()
+    totalEng=eng_collection.find({}, {'_id': False})
     if(request.method=='POST'):
         name=request.form['name']
         surname=request.form['surname']
@@ -64,10 +67,9 @@ def English():
             city=request.form['city']
             country=request.form['country']
             eng_collection.insert_one({'name':name,'surname':surname,'cars':cars,'city':city,'country':country})
-        totalEng=eng_collection.find()
+        totalEng=eng_collection.find({}, {'_id': False})
         return render_template('english.html',totalEng=totalEng)
     else:
-        print(type(totalEng))
         return render_template('english.html',totalEng=totalEng)
 
 

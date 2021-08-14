@@ -52,7 +52,7 @@
                         <td class="country_col">{{eng.country}}</td>
                         <!-- <td class="country_col"><button class="btn-sm btn-primary" onclick="view();" id="myBtn">View</button></td> -->
                         <td> <!-- Button trigger modal -->
-                            <button type="button" class="btn-sm btn-primary" value='{{eng}}' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="modalShow(this.value);" >
+                            <button type="button" class="btn-sm btn-primary" value='{{eng}}' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="EngmodalShow(this.value);" >
                                 View
                             </button>
                         </td>
@@ -122,7 +122,22 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="mbody">
-                This is Body
+                <div id="city"></div>
+                <div id="country"></div>
+                <div><strong>Cars</strong></div>
+                <table class="table table-light " id="modal-table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr></tr>
+                        
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -132,19 +147,7 @@
         </div>
     </div>
 
-    <script>
-        function modalShow(Eng){
-
-            document.getElementById("mbody").innerHTML = Eng
-            const obj = JSON.parse("{'name': 'Micheal', 'surname': 'White'}");
-            document.getElementById("mbody").innerHTML = obj.name
-            
-            // console.log('ModalShow');
-            // console.log(typeof(Eng));
-            // var obj = JSON.parse(Eng);
-            
-        }
-    </script>
+    
 
     
 {% endblock body %}
