@@ -1,8 +1,45 @@
 {% extends 'layout.html' %}
-{% block title %}
-    Italian
-{% endblock title %}
-{% block body %}
 
+
+{% block Title %}
+    Italian
+{% endblock Title %}
+
+
+
+{% block body %}
     
+
+    {% set name = 'Waqas' %}
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" value="{{name}}" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="modalShow(this.value);" >
+        Launch demo modal
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="mbody">
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        function modalShow(name){
+            console.log('ModalShow');
+            document.getElementById("mbody").innerHTML = name
+        }
+    </script>
+  
 {% endblock body %}

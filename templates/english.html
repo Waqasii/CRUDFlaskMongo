@@ -1,7 +1,150 @@
 {% extends 'layout.html' %}
-{% block title %}
+
+
+{% block Title %}
     English
-{% endblock title %}
+{% endblock Title %}
+
+
+
 {% block body %}
+
+    <div class="container-fluid mt-4 d-flex flex-row justify-content-evenly">
+
+
+        
+        
+
+
+
+        <!-- To show Data -->
+        <div class="container " style="width:70%">
+            <div id="checkbox_div" class="d-flex flex-row justify-content-center">
+                <label><input type="checkbox" value="hide" id="name_col" onchange="hide_show_table(this.id);">Name</label> 
+                <label><input type="checkbox" value="hide" id="surname_col" onchange="hide_show_table(this.id);">surname</label> 
+                <label><input type="checkbox" value="hide" id="car_col" onchange="hide_show_table(this.id);">Car</label> 
+                <label><input type="checkbox" value="hide" id="city_col" onchange="hide_show_table(this.id);">City</label> 
+                <label><input type="checkbox" value="hide" id="country_col" onchange="hide_show_table(this.id);">Country</label> 
+            </div>
+
+            <table class="table" >
+                <thead>
+                  <tr>
+                        <th>No#</th>
+                        <th id="name_col_head">Name</th>
+                        <th id="surname_col_head">Surname</th>
+                        <th id="car_col_head">Car</th>
+                        <th id="city_col_head">City</th>
+                        <th id="country_col_head">Country</th>
+                        <th id="action">Action</th>
+                    
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for eng in totalEng  %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td class="name_col">{{eng.name}}</td>
+                        <td class="surname_col">{{eng.surname}}</td>
+                        <td class="car_col">{{eng.cars}}</td>
+                        <td class="city_col">{{eng.city}}</td>
+                        <td class="country_col">{{eng.country}}</td>
+                        <!-- <td class="country_col"><button class="btn-sm btn-primary" onclick="view();" id="myBtn">View</button></td> -->
+                        <td> <!-- Button trigger modal -->
+                            <button type="button" class="btn-sm btn-primary" value='{{eng}}' data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="modalShow(this.value);" >
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                    
+
+                  {% endfor %}
+
+                        
+                  
+                </tbody>
+            </table>
+
+             
+            
+        </div>
+
+
+        <!-- vertical Line -->
+        <div class="vl"></div>
+
+
+        <!-- To Insert New Data -->
+        <div class="container  mb-4" style="width:30%">
+            <h3>Add Data</h3>
+            <form method="POST" action="/english" class="mb-4">
+                <div class="form-group">
+                    <label for="my-input">Name</label>
+                    <input id="my-input" class="form-control" type="text" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="my-input">Surname</label>
+                    <input id="my-input" class="form-control" type="text" name="surname">
+                </div>
+                <div class="form-group">
+                    <label for="my-input">Car Brand</label>
+                    <input id="my-input" class="form-control" type="text" name="car_brand">
+                </div>
+                <div class="form-group">
+                    <label for="my-input">Car Model</label>
+                    <input id="my-input" class="form-control" type="text" name="car_model">
+                </div>
+                <div class="form-group">
+                    <label for="my-input">City</label>
+                    <input id="my-input" class="form-control" type="text" name="city">
+                </div>
+                <div class="form-group">
+                    <label for="my-input">Country</label>
+                    <input id="my-input" class="form-control" type="text" name="country">
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                
+            </form>
+        </div>
+        
+    </div>
+
+    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">This is Title </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="mbody">
+                This is Body
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        function modalShow(Eng){
+
+            document.getElementById("mbody").innerHTML = Eng
+            const obj = JSON.parse("{'name': 'Micheal', 'surname': 'White'}");
+            document.getElementById("mbody").innerHTML = obj.name
+            
+            // console.log('ModalShow');
+            // console.log(typeof(Eng));
+            // var obj = JSON.parse(Eng);
+            
+        }
+    </script>
+
     
 {% endblock body %}

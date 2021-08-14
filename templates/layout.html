@@ -7,18 +7,21 @@
 <meta name="Description" content="Enter your description here"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>{% block Title %}
-    
-{% endblock Title %}</title>
+
+<!-- add custom css and javascript -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="{{ url_for('static', filename='js/javaScript.js') }}"></script>
+<title> 
+    {% block Title %} {% endblock Title %} | User
+</title>
 </head>
 <body>
     <nav class="nav">
         <li class="nav-item">
-            <a class="nav-link text-primary" href="#">Italian</a>
+            <a class="nav-link text-primary" href="/italian">Italian</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-primary" href="#" >English</a>
+            <a class="nav-link text-primary" href="/english" >English</a>
         </li>
     </nav>
 

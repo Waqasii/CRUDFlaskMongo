@@ -9,7 +9,7 @@ mongo.init_app(app)
 
 '''
     DB Name: mydb
-        collection For English: Eng
+        collection For English: Eng 
         collection For Italian: IT
         collection For User Login: User
     
@@ -40,6 +40,42 @@ def Login():
             return redirect('/')
 
 
+@app.route("/english",methods=['GET','POST'])
+def English():
+    # get the data from Eng table
+    eng_collection=mongo.db.Eng
+    totalEng=eng_collection.find()
+    if(request.method=='POST'):
+        name=request.form['name']
+        surname=request.form['surname']
+        if(eng_collection.find_one({'name':name,'surname':surname})):
+            print('User Found')
+            car_length=len(eng_collection.find_one({'name':name,'surname':surname})['cars'])
+            car_brand=request.form['car_brand']
+            car_model=request.form['car_model']
+            car={'id':car_length+1,'brand':car_brand,'model':car_model}
+            eng_collection.update({'name':name,'surname':surname}, {'$push': {'cars': car}})
+            
+        else:
+            print('New User')
+            car_brand=request.form['car_brand']
+            car_model=request.form['car_model']
+            cars=[{'id':1,'brand':car_brand,'model':car_model}]
+            city=request.form['city']
+            country=request.form['country']
+            eng_collection.insert_one({'name':name,'surname':surname,'cars':cars,'city':city,'country':country})
+        totalEng=eng_collection.find()
+        return render_template('english.html',totalEng=totalEng)
+    else:
+        print(type(totalEng))
+        return render_template('english.html',totalEng=totalEng)
+
+
+
+@app.route("/italian",methods=['GET','POST'])
+def Italian():
+    return render_template('italian.html')
+    
 
 if __name__== "__main__":
     app.run(debug=True)
