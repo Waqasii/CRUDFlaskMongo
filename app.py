@@ -76,7 +76,32 @@ def English():
 
 @app.route("/italian",methods=['GET','POST'])
 def Italian():
-    return render_template('italian.html')
+    # get the data from Eng table
+    it_collection=mongo.db.IT
+    totalEng=it_collection.find({}, {'_id': False})
+    if(request.method=='POST'):
+        name=request.form['name']
+        surname=request.form['surname']
+        if(it_collection.find_one({'nome':name,'cognome':surname})):
+            print('User Found')
+            car_length=len(it_collection.find_one({'nome':name,'cognome':surname})['strada'])
+            car_brand=request.form['car_brand']
+            car_model=request.form['car_model']
+            car={'id':car_length+1,'marca':car_brand,'modello':car_model}
+            it_collection.update({'nome':name,'cognome':surname}, {'$push': {'strada': car}})
+            
+        else:
+            print('New User')
+            car_brand=request.form['car_brand']
+            car_model=request.form['car_model']
+            cars=[{'id':1,'marca':car_brand,'modello':car_model}]
+            city=request.form['city']
+            country=request.form['country']
+            it_collection.insert_one({'nome':name,'cognome':surname,'strada':cars,'citta':city,'pease':country})
+        totalEng=it_collection.find({}, {'_id': False})
+        return render_template('italian.html',totalEng=totalEng)
+    else:
+        return render_template('italian.html',totalEng=totalEng)
     
 
 if __name__== "__main__":
